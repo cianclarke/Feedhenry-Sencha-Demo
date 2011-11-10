@@ -1,5 +1,5 @@
 function getCountries(){
-  var countries = [
+  var data = [
   {
     name: 'Ireland'
   },
@@ -7,5 +7,10 @@ function getCountries(){
     name: 'UK'
   }
   ];
+  return data;
+}
+
+function getMoreCountries(){
+  // returns the global in shared
   return countries;
 }

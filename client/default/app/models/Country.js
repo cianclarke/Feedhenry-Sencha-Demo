@@ -4,11 +4,14 @@ app.models.Country = Ext.regModel('app.models.Country', {
   proxy: {
     type: 'fhact',
     reader: 'json',
-    id: 'getCountries'
+    id: 'getMoreCountries'
   }
 });
 
 app.stores.countries = new Ext.data.Store({
   model: 'app.models.Country',
-  autoLoad: true
+  autoLoad: true,
+  getGroupString: function(record){
+    return record.get('name')[0];
+  }
 });

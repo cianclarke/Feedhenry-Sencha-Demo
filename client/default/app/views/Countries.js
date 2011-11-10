@@ -21,7 +21,9 @@ app.views.Countries = Ext.extend(Ext.Panel, {
       width: '100%',
       store: app.stores.countries,
       itemTpl: '{name}',
-      flex: 1
+      flex: 1,
+      grouped: true,
+      indexBar: true
     }
   ]
   
