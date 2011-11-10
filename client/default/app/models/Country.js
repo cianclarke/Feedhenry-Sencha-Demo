@@ -1,9 +1,13 @@
 // Controller class named 'Country', not 'Countries'. class = description of an instance of..
 app.models.Country = Ext.regModel('app.models.Country', {
-  fields: ['name']
+  fields: ['name'],
+  proxy: {
+    type: 'fhact',
+    reader: 'json',
+    id: 'getCountries'
+  }
 });
 
 app.stores.countries = new Ext.data.Store({
-  model: 'app.models.Country',
-  data: [{name: 'test'}, {name: 'test2'}]
+  model: 'app.models.Country'
 });
