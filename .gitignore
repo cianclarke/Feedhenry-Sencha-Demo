@@ -1,0 +1,12 @@
+.DS_Store
+lib/touch
+ 
+/Contacts.xcodeproj/
+/Contacts/
+/www/lib/touch
+.sass-cache
+fh.js
+index-dev.html
+..sass-cache/
+/client/touch/lib/resources/sass/.sass-cache
+client/default/lib/touch/resources/sass/.sass-cache/*
