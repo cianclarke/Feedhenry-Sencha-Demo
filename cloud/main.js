@@ -6,5 +6,6 @@ function getCountries(){
   {
     name: 'UK'
   }
-  ]
+  ];
+  return countries;
 }

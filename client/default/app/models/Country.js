@@ -9,5 +9,6 @@ app.models.Country = Ext.regModel('app.models.Country', {
 });
 
 app.stores.countries = new Ext.data.Store({
-  model: 'app.models.Country'
+  model: 'app.models.Country',
+  autoLoad: true
 });
