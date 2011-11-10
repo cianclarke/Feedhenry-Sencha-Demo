@@ -1,5 +1,4 @@
 var countries = [
-    {name:"", data:""},
     {name:"Afghanistan", data:"93"},
     {name:"Albania", data:"355"},
     {name:"Algeria", data:"213"},
