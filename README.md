@@ -8,6 +8,6 @@ A demonstration of how to write a Feedhenry Cloud connected Sencha app
 * v3: Add another view, containing a hardcoded list. Introduce concept of Store, Model and List.
 * v4: Introduce the cloud, and proxies. Connect the list to the feedhenry cloud.
 * v5: Add some list features. Style the app with SASS.
-
+* v6: Add onItemDisclosure to list, controller, modal popup with tpl & update
 _Pre-presentation tips for eclipse:
 Close unrelated projects (open finished version). hide closed projects. && font size -> 24._

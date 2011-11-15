@@ -1,10 +1,12 @@
 function getCountries(){
   var data = [
   {
-    name: 'Ireland'
+    name: 'Ireland',
+    data: 123
   },
   {
-    name: 'UK'
+    name: 'UK', 
+    data: 456
   }
   ];
   return data;

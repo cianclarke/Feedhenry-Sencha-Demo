@@ -23,7 +23,16 @@ app.views.Countries = Ext.extend(Ext.Panel, {
       itemTpl: '{name}',
       flex: 1,
       grouped: true,
-      indexBar: true
+      indexBar: true,
+      onItemDisclosure: function(r, b, i){
+        Ext.dispatch({
+          controller: app.controllers.countries,
+          action: 'show',
+          record: r,
+          button: b,
+          index: i
+        });
+      }
     }
   ]
   
