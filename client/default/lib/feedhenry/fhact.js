@@ -11,6 +11,7 @@ Ext.ux.FHActProxy = Ext.extend(Ext.data.Proxy, {
       
         // if an id is not given, try to use the store's id instead
         this.id = this.id || (this.store ? this.store.storeId : undefined);
+        this.source = this.source || 'remote';
 
         if (this.id == undefined) {
             throw "No unique id was provided to the local storage proxy.";
@@ -42,8 +43,11 @@ Ext.ux.FHActProxy = Ext.extend(Ext.data.Proxy, {
 
 
     $fh.sync( {
-      'act' : this.id,
-      'req':req
+        'act' : this.id,
+        'req':req,
+        'prefs': {
+          source: this.source
+        }
       },function(response){
         if(response!=null && response.error){
           if(typeof errback === 'function'){
