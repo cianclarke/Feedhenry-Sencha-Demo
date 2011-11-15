@@ -75,9 +75,12 @@ Ext.ux.FHActProxy = Ext.extend(Ext.data.Proxy, {
       var callback = this.createRequestCallback(operation, callback, scope);
           var errback = this.createRequestErrback(operation, callback, scope);  
   
-        $fh.act( {
-        'act' : this.id,
-        'req':req
+        $fh.sync( {
+          'act' : this.id,
+          'req':req,
+          'prefs': {
+            source: this.source
+          }
         },function(response){
           if(response!=null && response.error){
             if(typeof errback === 'function'){
@@ -258,7 +261,7 @@ Ext.data.ProxyMgr.registerType('fhact', Ext.ux.FHActProxy);
 
 
 
-
+//TODO: If this becomes part of $fh core, remove duplication
 $fh.sync = function(params, success, failure){
 
   if (!params.act){
