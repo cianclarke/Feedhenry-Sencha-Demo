@@ -1,7 +1,7 @@
 var countries = [
-    {name:"AfghanistanAA", data:"93"},
-    {name:"AlbaniaAA", data:"355"},
-    {name:"AlgeriaAA", data:"213"},
+    {name:"Afghanistan", data:"93"},
+    {name:"Albania", data:"355"},
+    {name:"Algeria", data:"213"},
     {name:"American Samoa", data:"684"},
     {name:"Andorra", data:"33"},
     {name:"Anguilla", data:"264"},
