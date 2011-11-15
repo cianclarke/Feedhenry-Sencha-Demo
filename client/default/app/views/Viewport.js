@@ -18,8 +18,8 @@ app.views.Viewport = Ext.extend(Ext.TabPanel, {
         //put instances of cards into viewport
         Ext.apply(this, {
             items: [
-                app.views.home,
-                app.views.countries
+                app.views.countries,
+                app.views.home
             ]
         });
         app.views.Viewport.superclass.initComponent.apply(this, arguments);
