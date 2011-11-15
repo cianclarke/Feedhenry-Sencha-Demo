@@ -41,7 +41,7 @@ Ext.ux.FHActProxy = Ext.extend(Ext.data.Proxy, {
         var errback = this.createRequestErrback(operation, callback, scope);
 
 
-    $fh.act( {
+    $fh.sync( {
       'act' : this.id,
       'req':req
       },function(response){
@@ -247,3 +247,158 @@ Ext.ux.FHActProxy = Ext.extend(Ext.data.Proxy, {
 
 
 Ext.data.ProxyMgr.registerType('fhact', Ext.ux.FHActProxy);
+
+
+
+
+
+
+
+
+$fh.sync = function(params, success, failure){
+
+  if (!params.act){
+    failure({msg: 'Required parameter "act" missing'});
+    return;
+  }
+  if (!params.req){
+    failure({msg: 'Required parameter "req" missing'});    
+    return;
+  }
+  
+  $fh.hash({
+    algorithm: "md5",
+    text: JSON.stringify(params) 
+  }, function (hash){
+    console.log(hash);
+    sinker(params, success, failure, hash.hashvalue);
+    
+  }, function(err){
+      
+    failure({msg: err});
+  });
+
+  return;
+    
+   /*
+    * Implementation of main sync logic
+    */
+  function sinker(params, success, failure, hash){
+    if (!params.prefs){
+      params.prefs = {};
+    }
+  
+    switch(params.prefs.source)
+    {
+      case "local":
+        local(params, success, failure, hash);
+        break;
+      case "remote":
+        remote(params, success, failure, hash);
+        break;
+      case "localremote":
+        localRemote(params, success, failure, hash);
+        break;
+      default:
+        local(params, success, failure, hash);
+        break;
+    };
+        
+  }
+
+
+
+      
+  /*
+   * Reach implementations - local, remote and localRemote
+   */
+  function localRemote(params, success, failure, hash){
+    // Local storage first, then cloud - calls success twice. True sync()
+    $fh.data(
+        {
+          key:hash
+        }, 
+        function(res) {
+          if (!res.val){
+            getCloudData(params, success, failure, hash); 
+            return; 
+          }
+          var lSResult = res.val;
+          lsResult = JSON.parse(res.val);
+            
+          // Now get cloud data in a set timeout so we're not blocking our success cback
+          setTimeout(function(){
+            getCloudData(params, success, failure, hash);            
+          }, 500);  
+            
+          success(lsResult);
+        },
+        function(err){
+          // If local storage access fails, something's gone really wrong.
+          failure({msg: err});
+        }
+    );
+  }
+
+  function local(params, success, failure, hash){
+    // Try & prefer local storage. If local storage fails, go to cloud.
+    $fh.data(
+        {
+          key:hash
+        }, 
+        function(res) {
+          if (!res.val){
+            // Only if local storage fails do we read from cloud
+            getCloudData(params, success, failure, hash); 
+            return; 
+          }
+          var lSResult = res.val;
+          lsResult = JSON.parse(res.val);
+          success(lsResult);
+        },
+        function(err){
+          // If local storage access fails, something's gone really wrong.
+          failure({msg: err});
+        }
+    );
+  }
+
+  function remote(params, success, failure, hash){
+    // Just reach out to the cloud
+    getCloudData(
+      params,
+      success,
+      failure,
+      hash
+    );
+  }
+  
+  /* 
+   * Helper functions
+   */
+  
+  function getCloudData(params, success, failure, hash){
+    if (params.prefs.hasOwnProperty('remoteCache') && params.prefs.remoteCache===false){
+        params.req._fhts = new Date();     
+    }
+    
+    $fh.act(
+        params,
+        function(res){
+          // Update local data
+          $fh.data({ act: 'save', key: hash, val: JSON.stringify(res)});
+          // Call success function with our result
+          success(res);
+        },
+        function(code,errorprops,params){
+          // Have data locally, but none from cloud. Cloud error?
+          var msg = code + " - " + errorprops + " - " + params;
+          if (!navigator.onLine) return; // TODO: This should be in the app
+          var err = { msg: msg, code: code, errorprops: errorprops, params: params };
+          failure(err);
+        }
+    );  
+
+  };
+  
+}
