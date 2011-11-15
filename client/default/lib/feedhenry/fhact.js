@@ -295,7 +295,7 @@ $fh.sync = function(params, success, failure){
       params.prefs = {};
     }
   
-    switch(params.prefs.source)
+    switch(params.prefs.source.toLowerCase())
     {
       case "local":
         local(params, success, failure, hash);
