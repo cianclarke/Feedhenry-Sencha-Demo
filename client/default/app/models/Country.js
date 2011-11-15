@@ -4,7 +4,8 @@ app.models.Country = Ext.regModel('app.models.Country', {
   proxy: {
     type: 'fhact',
     reader: 'json',
-    id: 'getMoreCountries'
+    id: 'getMoreCountries',
+    source: 'localRemote'
   }
 });
 
