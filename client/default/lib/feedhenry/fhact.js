@@ -52,7 +52,7 @@ Ext.ux.FHActProxy = Ext.extend(Ext.data.Proxy, {
           return;
         }
         if(typeof callback === 'function'){
-          callback(response);
+          callback(response.data);
         }
       }, errback || Ext.emptyFn);
 
@@ -82,7 +82,7 @@ Ext.ux.FHActProxy = Ext.extend(Ext.data.Proxy, {
             return;
           }
           if(typeof callback === 'function'){
-            callback(response);
+            callback(response.data);
           }
         }, errback || Ext.emptyFn);
 
