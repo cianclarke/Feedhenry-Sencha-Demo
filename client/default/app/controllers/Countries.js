@@ -1,11 +1,14 @@
 app.controllers.countries = new Ext.Controller({
   show: function(options){
-      // show a shiny new panel in here
-  var panel = options.panel,
-  record = options.record;
+    // show a shiny new panel in here
+    var panel = options.panel,
+    record = options.record,
+    attachTo = options.attachTo;
       
-      var countryDetails = new app.views.CountryDetails();
-      countryDetails.update(record.data);
-      countryDetails.show();
+    var countryDetails = new app.views.CountryDetails({
+      goBackTo: attachTo
+    });
+    countryDetails.update(record.data);
+    attachTo.setActiveItem(countryDetails, 'slide');
   }
 });
