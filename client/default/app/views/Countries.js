@@ -20,7 +20,7 @@ app.views.Countries = Ext.extend(Ext.Panel, {
       xtype: 'list',
       width: '100%',
       store: app.stores.countries,
-      itemTpl: '{name}',
+      itemTpl: '{countryName}',
       flex: 1
     }
   ]
